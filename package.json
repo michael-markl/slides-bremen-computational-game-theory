@@ -1,7 +1,7 @@
 {
   "name": "spectacle-presentation",
   "version": "0.0.1",
-  "description": "Prediction Equilibrium for Dynamic Traffic Assignment",
+  "description": "Machine-Learned Prediction Equilibrium for Dynamic Traffic Assignment",
   "scripts": {
     "clean": "rimraf dist",
     "build": "webpack --mode=production",

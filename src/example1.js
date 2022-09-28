@@ -27,15 +27,14 @@ const vPos = [225, 150];
 const tPos = [425, 150];
 const s2Pos = [225 - 200 / Math.sqrt(2), 150 + 200 / Math.sqrt(2)];
 
-export const Example1Svg = ({ overrideT = null }) => {
+export const Example1Svg = ({ overrideT = null, svgIdPrefix = "example1-" }) => {
   const width = 450;
   const height = s2Pos[1] + 25;
-  const svgIdPrefix = "example1-";
   if (typeof overrideT == "number") {
     return (
       <SvgContent
         width={width}
-        height={height}
+        height={sPos[1] + 25}
         svgIdPrefix={svgIdPrefix}
         t={overrideT}
         showStopWatch={false}
@@ -43,7 +42,7 @@ export const Example1Svg = ({ overrideT = null }) => {
     );
   }
   return (
-    <Stepper values={[0, 400, 800, 1200, 1200.00001, 1450, 1900]} alwaysVisible>
+    <Stepper values={[0, 400, 800, 1200]} alwaysVisible>
       {(value, step, isActive) => {
         const [t, setT] = useState(typeof value === "number" ? value : 0);
         useInterval(() => {
@@ -113,8 +112,8 @@ const SvgContent = ({ width, height, svgIdPrefix, t, showStopWatch }) => {
           t={t}
         />
 
-        <Vertex pos={sPos} label={<TeX>s_1</TeX>} />
-        <Vertex pos={tPos} label={<TeX>t_1</TeX>} />
+        <Vertex pos={sPos} label={<TeX>s</TeX>} />
+        <Vertex pos={tPos} label={<TeX>t</TeX>} />
         <Vertex pos={vPos} label={<TeX>v</TeX>} />
         <Vertex pos={s2Pos} label={<TeX>s_2</TeX>} visible={t > 1200} />
         <g

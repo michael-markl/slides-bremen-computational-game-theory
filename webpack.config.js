@@ -63,7 +63,7 @@ module.exports = (env) => {
     // Default for boilerplate generation.
     plugins: [
       new HtmlWebpackPlugin({
-        title: "Prediction Equilibrium for Dynamic Traffic Assignment",
+        title: "Machine-Learned Prediction Equilibrium for Dynamic Traffic Assignment",
         template: "./src/index.html",
         filename: htmlOutputFilename,
       }),
