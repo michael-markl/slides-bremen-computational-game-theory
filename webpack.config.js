@@ -1,7 +1,10 @@
 "use strict";
 
 const path = require("path");
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Customized babel loader with the minimum we need to get `mdx` libraries
 // working, which unfortunately codegen JSX instead of JS.
@@ -12,28 +15,24 @@ const babelLoader = {
     babelrc: true,
     // ... with some additional needed options.
     presets: [require.resolve("@babel/preset-react")],
+    plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
   },
 };
-
-/**
- * Base configuration for the CLI, core, and examples.
- */
 
 module.exports = (env) => {
   let entry = "./src/index.js";
   let bundleOutputFilename = "deck.js";
   let htmlOutputFilename = "index.html";
-  if (env.poster) {
-    entry = "./src/poster.js";
-    bundleOutputFilename = "poster.js";
-    htmlOutputFilename = "poster.html";
-  }
   return {
-    mode: "development",
+    mode: isDevelopment ? 'development' : 'production',
     entry, // Default for boilerplate generation.
     output: {
       path: path.resolve("dist"),
       filename: bundleOutputFilename,
+    },
+    devServer: {
+      hot: true,  
+      client: { overlay: false },
     },
     devtool: "source-map",
     module: {
@@ -55,19 +54,20 @@ module.exports = (env) => {
           use: [babelLoader, require.resolve("spectacle-mdx-loader")],
         },
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.(png|svg|jpg|gif|webp)$/,
           use: [require.resolve("file-loader")],
         },
       ],
     },
     // Default for boilerplate generation.
     plugins: [
+      isDevelopment && new ReactRefreshPlugin(),
       new HtmlWebpackPlugin({
         title: "Machine-Learned Prediction Equilibrium for Dynamic Traffic Assignment",
         template: "./src/index.html",
         filename: htmlOutputFilename,
       }),
-    ],
+    ].filter(Boolean),
     resolve: {
       fallback: { util: false, assert: false },
     },

@@ -1,5 +1,4 @@
 import React, { useRef, useContext } from "react";
-import { createRoot } from "react-dom/client";
 import {
     FlexBox,
     Heading,
@@ -39,6 +38,9 @@ const ListItem = (props) => (
     <OriginalListItem style={{ margin: "10px" }} {...props} />
 );
 
+import screenshot1 from './screenshot2.2.png'
+import screenshot2 from './screenshot2.webp'
+
 const theme = {
     fonts: {
         header: '"Open Sans", Helvetica, Arial, sans-serif',
@@ -60,7 +62,7 @@ const theme = {
         h2: "32px",
         h3: "28px",
         head: "16px",
-        text: "18px",
+        text: "20px",
     },
 };
 
@@ -238,6 +240,15 @@ export const Presentation = () => (
       </Appear>*/}
         </Slide>
 
+        <CustomSlide section="Motivation">
+            <div style={{ margin: "0 auto", marginTop: "50px", width: "350px" }}>
+                <img width="350" src={screenshot1} style={{ position: "absolute" }} />
+                <Appear>
+                    <img width="350" src={screenshot2} style={{ position: "absolute" }} />
+                </Appear>
+            </div>
+        </CustomSlide>
+
         <CustomSlide intro section="I. The Flow Model">
             <SubHeading textAlign="left">The Physical Flow Model</SubHeading>
             <Box>
@@ -253,7 +264,8 @@ export const Presentation = () => (
                             {Tex`\nu_e> 0`} for {Tex`e\in E`}, and
                         </ListItem>
                         <ListItem>
-                            source {Tex`s\in V`} and sink {Tex`t\in V`}, and a network inflow rate {Tex`u  \in \mathcal R \coloneqq L^1_{\text{loc}}(\R_{\geq 0}, \R_{\geq 0})`}
+                            source {Tex`s\in V`} and sink {Tex`t\in V`}, and</ListItem>
+                        <ListItem>network inflow rate {Tex`u  \in \mathcal R \coloneqq L^1_{\text{loc}}(\R_{\geq 0}, \R_{\geq 0})`}
                             .
                         </ListItem>
                     </UnorderedList>
@@ -277,98 +289,132 @@ export const Presentation = () => (
                             {Tex`~~q_e(\theta) \coloneqq \int_0^\theta f^+_e\,\mathrm d\lambda  -  \int_0^{\theta + \tau_e} f^-_e \,\mathrm d\lambda`}
                         </Notation>
                     </Appear>
-                    <Appear>
+                    {/*<Appear>
                         <Definition position="relative">
-                            A dynamic flow {Tex`f`} is <i>feasible</i> if it fulfills the
-                            following conditions:
+                            A dynamic flow {Tex`f`} is <i>feasible</i> if
                             <UnorderedList style={{ margin: "0" }}>
                                 <ShowcaseFormula
                                     text="Flow is conserved:"
                                     formula={BTex`\sum_{e\in\delta_v^+} f^+_{e}(\theta) - \sum_{e\in\delta_v^-} f^-_{e}(\theta) 
-              \begin{cases}
-              = u(\theta), & \text{if $v = s$}, \\
-              = 0, & \text{if $v \notin \{s, t \}$}, \\
-              \leq 0, & \text{if $v = t$}.
-              \end{cases}`}
+            \begin{cases}
+            = u(\theta), & \text{if $v = s$}, \\
+            = 0, & \text{if $v \notin \{s, t \}$}, \\
+            \leq 0, & \text{if $v = t$}.
+            \end{cases}`}
                                 />
                                 <ShowcaseFormula
                                     text="Queues operate at capacity:"
                                     formula={BTex`f_e^-(\theta) = \begin{cases}
-            \nu_e,&\text{if $q_e(\theta - \tau_e) > 0$,} \\
-            \min\{ f_e^+(\theta- \tau_e), \nu_e \}, &\text{otherwise.}
-          \end{cases}`}
+        \nu_e,&\text{if $q_e(\theta - \tau_e) > 0$,} \\
+        \min\{ f_e^+(\theta- \tau_e), \nu_e \}, &\text{otherwise.}
+        \end{cases}`}
                                 />
                             </UnorderedList>
                         </Definition>
-                    </Appear>
+                    </Appear>*/}
                 </div>
             </Box>
         </CustomSlide>
 
+        {/*
         <CustomSlide section="I. The Flow Model">
             <SubHeading textAlign="left">The Behavioral Model</SubHeading>
-            <Box style={{ textAlign: "center", marginTop: "-50px" }}>
+            <Box style={{ textAlign: "left", marginTop: "-60px", marginLeft: "140px" }}>
                 <Example1Svg svgIdPrefix="example1-2" overrideT={800} />
             </Box>
-            <div>
-                <Text style={{ textAlign: "center" }}>{Tex`T_e(\theta)\coloneqq \theta + \tau_e + \frac{q_e(\theta)}{\nu_e}`}</Text>
-                <Text style={{ textAlign: "center" }}>{Tex`T_{e_1\cdots e_k}(\theta)\coloneqq \left(T_{e_k}  \right)(\theta)
-        \left(\hat T_{e_k}(\,\boldsymbol{\cdot}\,;\bar\theta;f) \circ \cdots \circ \hat T_{e_1}(\,\boldsymbol{\cdot}\,;\bar\theta;f)\right)(\theta).`}</Text>
-            </div>
-        </CustomSlide>
-
-        <CustomSlide section="I. The Flow Model">
-            <SubHeading textAlign="left">The Behavioral Model</SubHeading>
-            <Box>
-                <UnorderedList margin="0 32px">
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                <div style={{ paddingLeft: "150px", paddingRight: "40px" }}>
+                    <Appear><Text>{Tex`T_e(\theta)\coloneqq \theta + \tau_e + \frac{q_e(\theta)}{\nu_e}`}</Text></Appear>
+                    <Appear><Text>{Tex`T_{e_1\cdots e_k}(\theta)\coloneqq \left( T_{e_k} \circ \cdots \circ T_{e_1} \right)(\theta)`}</Text></Appear>
+                    <Appear><Text>{Tex`l_v(\theta) \coloneqq \displaystyle \min_{\text{\scriptsize $v$-$t$-path $P$}} T_P(\theta)`}</Text></Appear>
                     <Appear>
-                        <ListItem>
-                            The <i>exit time</i> when entering edge {Tex`e`} at time{" "}
-                            {Tex`\theta`} is given by{" "}
-                            {Tex`T_e(\theta)\coloneqq \theta + \tau_e + \frac{q_e(\theta)}{\nu_e}`}
-                        </ListItem>
+                        <Definition width="300">
+                            A feasible flow {Tex`f`} is a <i>  dynamic <br />Nash equilibrium</i>, if
+                            {BTex`f_{vw}^+(\theta) > 0 \implies l_{w}(T_{vw}(\theta)) = l_{v}(\theta).`}
+                        </Definition>
+                    </Appear>
+                </div>
+                <div style={{ textAlign: "left", flex: '1' }}>
+                    <Appear><Text style={{ marginTop: "-130px" }}>The infinitesimal particles use a set of predictors {Tex`(\hat q_e)_e`}.</Text></Appear>
+                    <Appear>
+                        <Text style={{ marginTop: "-40px" }}>{Tex`\hat q_{e}(\theta,\bar\theta,f)`} is the <i>predicted queue length</i> at time {Tex`\theta`} as predicted at time {Tex`\bar\theta`} using the historical flow {Tex`f`}.</Text>
+                    </Appear>
+                    <Text>
+                        <Appear><ValuesStepper values={[
+                            //Tex`\color{transparent} \hat T_e(\theta, \bar\theta, f)\coloneqq \theta + \tau_e + \frac{{\color{black}\hat q_e(\theta, \bar\theta, f)}}{\nu_e}`,
+                            Tex`\color{black} \hat T_e(\theta, \bar\theta, f)\coloneqq \theta + \tau_e + \frac{{\color{black}\hat q_e(\theta, \bar\theta, f)}}{\nu_e}`,
+                        ]} /></Appear>
+                    </Text>
+                    <Appear>
+                        <Text style={{ marginTop: "-5px" }}>
+                            {Tex`\hat T_{e_1\cdots e_k}(\theta, \bar\theta, f)
+            \coloneqq \left(\hat T_{e_k}(\,\boldsymbol{\cdot}\,,\bar\theta,f) \circ \cdots \circ \hat T_{e_1}(\,\boldsymbol{\cdot}\,,\bar\theta,f)\right)(\theta)`}
+                        </Text>
                     </Appear>
                     <Appear>
-                        <ListItem>
-                            We are given a set of{" "}
-                            <i>predictors</i>{" "}
-                            {BTex`
-          \hat q_{e} : \mathbb R \times \mathbb R \times (\mathcal R\times \mathcal R)^{E} \to \mathbb R_{\geq 0},
-          \quad
-          (\theta, \bar\theta, f)\mapsto\hat q_{e}(\theta; \bar\theta; f),`}
-                            where {Tex`\hat q_{e}(\theta; \bar\theta; f)`} describes the{" "}
-                            <i>predicted queue length </i>
+                        <Text style={{ marginTop: "-8px", marginBottom: "-5px" }}>
+                            {Tex`\hat l_v(\theta,\bar\theta, f) \coloneqq \displaystyle \min_{\text{\scriptsize $v$-$t$-path $P$}} \hat T_P(\theta,\bar\theta, f)`}
+                        </Text>
+                    </Appear>
+                    <Appear>
+                        <Definition width="300">
+                            The pair {Tex`(\hat q, f)`} is a <i>dynamic prediction equilibrium (DPE)</i>, if {Tex`f`} is feasible and
+                            {BTex`f_{vw}^+(\theta) > 0 \implies \hat l_{w}( \hat T_{vw}(\theta, \theta, f), \theta, f) = \hat l_{v}(\theta,\theta,f).`}
+                        </Definition>
+                    </Appear>
+                </div>
+            </div>
+        </CustomSlide>*/}
+
+        <CustomSlide section="I. The Flow Model">
+            <SubHeading textAlign="center">The Behavioral Model</SubHeading>
+            <div style={{ width: "880px", margin: "0 auto", marginTop: "-20px" }}>
+                <Box>
+                    <UnorderedList margin="0 32px">
+                        <Appear>
+                            <ListItem>
+                                The <i>exit time</i> when entering edge {Tex`e`} at time{" "}
+                                {Tex`\theta`} is given by{" "}
+                                {Tex`T_e(\theta)\coloneqq \theta + \tau_e + \frac{q_e(\theta)}{\nu_e}`}
+                            </ListItem>
+                        </Appear>
+                        <Appear>
+                            <ListItem>
+                                The infinitesimal players use a set of <i>predictors</i> {Tex`(\hat q_e)_e`}.
+                            </ListItem>
+                        </Appear>
+                        <Appear><ListItem>{Tex`\hat q_{e}(\theta; \bar\theta; f)`}: the <i>predicted queue length </i>
                             of edge {Tex`e`} at time {Tex`\theta`} as predicted at time{" "}
                             {Tex`\bar\theta`} using the historical flow {Tex`f`}.
                         </ListItem>
-                    </Appear>
-                    <Appear>
-                        <ListItem>
-                            The <i>predicted exit time</i> when entering an edge {Tex`e`} at
-                            time {Tex`\theta`} is given by{" "}
-                            {Tex`\hat T_{e}(\theta; \bar\theta; f)\coloneqq \theta + \tau_e + \frac{\hat q_{e}(\theta; \bar\theta, f)}{\nu_e}`}
-                            .
-                        </ListItem>
-                    </Appear>
-                    <Appear>
-                        <ListItem>
-                            The <i>predicted exit time</i> when entering a path{" "}
-                            {Tex`P=(e_1, \dots, e_k)`} at time {Tex`\theta`} is given by
-                            {BTex`\hat T_{i,P}(\theta; \bar\theta; f)
+                        </Appear>
+                        <Appear>
+                            <ListItem>
+                                The <i>predicted exit time</i> when entering edge {Tex`e`} at
+                                time {Tex`\theta`} is given by{" "}<br />
+                                {Tex`\hat T_{e}(\theta; \bar\theta; f)\coloneqq \theta + \tau_e + \frac{\hat q_{e}(\theta; \bar\theta, f)}{\nu_e}`}
+                                .
+                            </ListItem>
+                        </Appear>
+                        <Appear>
+                            <ListItem>
+                                The <i>predicted exit time</i> when entering path{" "}
+                                {Tex`P=(e_1, \dots, e_k)`} at time {Tex`\theta`} is given by
+                                {BTex`\hat T_{P}(\theta; \bar\theta; f)
             \coloneqq \left(\hat T_{e_k}(\,\boldsymbol{\cdot}\,;\bar\theta;f) \circ \cdots \circ \hat T_{e_1}(\,\boldsymbol{\cdot}\,;\bar\theta;f)\right)(\theta).
             `}
-                        </ListItem>
-                    </Appear>
-                    <Appear>
-                        <ListItem>
-                            The <i>predicted earliest arrival</i> at {Tex`t`} when starting
-                            at time {Tex`\theta`} at {Tex`v`} is given by{" "}
-                            {Tex`\displaystyle ~\hat l_{v}(\theta; \bar\theta; f)
-            \coloneqq \min_{P\text{ simple } v\text{-}t\text{-path}} \hat T_{i,P}(\theta;\bar\theta;f).
+                            </ListItem>
+                        </Appear>
+                        <Appear>
+                            <ListItem>
+                                The <i>predicted earliest arrival</i> at {Tex`t`} when starting
+                                at time {Tex`\theta`} at {Tex`v`} is given by{" "}
+                                {Tex`\displaystyle ~\hat l_{v}(\theta; \bar\theta; f)
+            \coloneqq \min_{P\text{ simple } v\text{-}t\text{-path}} \hat T_{P}(\theta;\bar\theta;f).
             `}
-                        </ListItem>
-                    </Appear>
-                    <Appear>
+                            </ListItem>
+                        </Appear>
+                        {/*<Appear>
                         <ListItem style={{ marginTop: "15px", marginLeft: "10px" }}>
                             The <i>predicted delay</i> when entering an edge {Tex`e=vw`} at
                             time {Tex`\theta`} is given by{" "}
@@ -376,43 +422,42 @@ export const Presentation = () => (
             \coloneqq \hat l_{w}(\hat T_{e}( \theta;\bar\theta; f); \theta; f) - \hat l_{v}(\theta;\bar\theta; f).
             `}
                         </ListItem>
-                    </Appear>
-                </UnorderedList>
-                <Appear>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Definition width="800px">
-                            A pair {Tex`(\hat q, f)`} of predictors{" "}
-                            {Tex`\hat q = (\hat q_{e})_{i\in I, e\in E}`} and a feasible
-                            dynamic flow {Tex`f`} is a{" "}
-                            <i>dynamic prediction equilibrium (DPE)</i>, if for all edges{" "}
-                            {Tex`e=vw`} and all {Tex`\theta \geq 0`} it holds that
-                            {BTex`
+                    </Appear>*/}
+                    </UnorderedList>
+
+                    <Appear>
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <Definition width="800px">
+                                The pair {Tex`(\hat q, f)`} is a{" "}
+                                <i>dynamic prediction equilibrium (DPE)</i>, if {Tex`f`} is feasible and
+                                {/*BTex`
               f^+_{e}(\theta) > 0 \implies \hat\Delta_{e}(\theta,\theta, f) = 0.
-          `}
-                        </Definition>
-                    </div>
-                </Appear>
-            </Box>
+          `*/}
+                                {BTex`f_{vw}^+(\theta) > 0 \implies \hat l_{w}( \hat T_{vw}(\theta, \theta, f), \theta, f) = \hat l_{v}(\theta,\theta,f).`}
+                            </Definition>
+                        </div>
+                    </Appear>
+                </Box></div>
         </CustomSlide>
 
         <CustomSlide section="I. The Flow Model">
             <Example>
                 A dynamic prediction equilibrium.
                 <UnorderedList>
-                    <Appear>
-                        <ListItem>
-                            We are given a single commodity with network inflow rate {Tex`u\equiv 2`} and predictor{" "}
-                            {Tex`\hat q_{e}(\theta;\bar\theta; f) \coloneqq q^f_e(\bar\theta) + \partial_- q^f_e(\bar\theta)\cdot (\theta - \bar\theta)`}
-                            .
-                        </ListItem>
-                    </Appear>
-                    <Appear>
-                        <ListItem>
+                    <Appear><ListItem>
+                        Network inflow rate {Tex`u\equiv 2`}
+                    </ListItem></Appear>
+                    <Appear><ListItem>
+                        Predictor{" "}
+                        {Tex`\hat q_{e}(\theta;\bar\theta; f) \coloneqq q^f_e(\bar\theta) + \partial_- q^f_e(\bar\theta)\cdot (\theta - \bar\theta)`}
+                        .
+                    </ListItem></Appear>
+                    {/*<Appear><ListItem>
                             Only edge {Tex`ut`} can build a queue. For other edges{" "}
                             {Tex`e\neq uv`} we have {Tex`\hat q_{e}(\theta;\bar\theta;f) = 0`}
                             .
                         </ListItem>
-                    </Appear>
+                    </Appear>*/}
                     <Appear>
                         <ListItem>
                             Particles starting at {Tex`s`} need to decide between paths{" "}
@@ -421,10 +466,7 @@ export const Presentation = () => (
                     </Appear>
                     <Appear>
                         <ListItem>
-                            We have {Tex`\hat T_{svwt}(\theta;\bar\theta; f) = \theta + 4`}{" "}
-                            and{" "}
-                            {Tex`\hat T_{sut}(\theta;\bar\theta; f) = \theta + 2 + \hat q_{ut}(\theta + 1;\bar\theta; f)`}
-                            .
+                            We have {Tex`\hat T_{sut}(\theta;\bar\theta; f) = \theta + 2 + \hat q_{ut}(\theta + 1;\bar\theta; f)`} and {Tex`\hat T_{svwt}(\theta;\bar\theta; f) = \theta + 4`}.
                         </ListItem>
                     </Appear>
                 </UnorderedList>
@@ -432,10 +474,9 @@ export const Presentation = () => (
             <Example3Svg />
         </CustomSlide>
 
-        <CustomSlide intro section="II. Existence of DPE">
+        {/*<CustomSlide intro section="II. Existence of DPE">
             <SubHeading textAlign="left">Example for Nonexistence</SubHeading>
             <Example>
-                We are given
                 <div
                     style={{
                         display: "flex",
@@ -447,12 +488,11 @@ export const Presentation = () => (
                         <UnorderedList>
                             <Appear>
                                 <ListItem>
-                                    a single commodity with network inflow rate {Tex`u \equiv 2`}{" "}
-                                    with predictor
+                                    Network inflow rate {Tex`u \equiv 2`}{" "}
                                 </ListItem>
                             </Appear>
                             <Appear>
-                                <ListItem>{Tex`
+                                <ListItem>Predictor {Tex`
             \hat q_e(\theta;\bar\theta; f) \coloneqq \begin{cases}
                 q_e(\bar\theta),& \text{if $q_e(\bar\theta) < 1$}, \\
                 2,              & \text{otherwise.}
@@ -473,61 +513,60 @@ export const Presentation = () => (
             <Appear>
                 <Question>When do dynamic prediction equilibria exist?</Question>
             </Appear>
-        </CustomSlide>
+        </CustomSlide>*/}
 
-        <CustomSlide section="II. Existence of DPE">
-            <SubHeading textAlign="left">
+        <CustomSlide intro section="II. Existence of DPE">
+            <SubHeading textAlign="center">
                 Sufficient Conditions for the Existence of DPE
             </SubHeading>
-            <Appear>
-                <Definition>
-                    A predictor {Tex`\hat q_{e}`} is <i>{Tex`p`}-continuous</i> with{" "}
-                    {Tex`p \geq 1`}, if for all {Tex`M > 0`} and compact intervals{" "}
-                    {Tex`D`} the mapping{" "}
-                    {BTex`
-       \mathcal A: \quad f^+ \mapsto \hat q_{e}(${emptyArg},${emptyArg}, f)
-       ,`}{" "}
-                    where {Tex`f`} is the deterministic flow with inflow rates {Tex`f^+`},
-                    is sequentially weak-strong continuous from{" "}
-                    {Tex`L^p([0, M])^{ E}`} to {Tex`C([0,M]\times D)`}.
-                </Definition>
-            </Appear>
-            <Appear>
-                <Definition>
-                    A predictor {Tex`\hat q_{e}`} is <i>oblivious</i>, if for all{" "}
-                    {Tex`\bar\theta \in\mathbb R_{\geq0}`} it holds{" "}
-                    {Tex`
+            <div style={{ width: "830px", margin: "0 auto" }}>
+                <Appear>
+                    <Theorem>
+                        If all
+                        predictors respect FIFO, are oblivious and {Tex`p`}-continuous, for some {Tex`p>1`}, then there exists a flow{" "}
+                        {Tex`f`} such that {Tex`(\hat q, f)`} is a dynamic prediction
+                        equilibrium.
+                    </Theorem>
+                </Appear>
+                <Appear>
+                    <Definition>
+                        A predictor {Tex`\hat q_{e}`} <i>respects FIFO</i>, if{" "}
+                        {Tex`\hat T_{e}(\,\boldsymbol{\cdot}\,;\bar\theta, f)`} is
+                        non-decreasing for all {Tex`\bar\theta\in \R_{\geq0}`} and
+                        deterministic flows {Tex`f`}.
+                    </Definition>
+                </Appear>
+                <Appear>
+                    <Definition>
+                        A predictor {Tex`\hat q_{e}`} is <i>oblivious</i>, if for all{" "}
+                        {Tex`\bar\theta \in\mathbb R_{\geq0}`} it holds{" "}
+                        {BTex`
         \quad\forall f,f'\colon\quad
-    f_{\hspace{.07em}\vert\hspace{.07em}[0, \bar\theta]^{ E}} ~\overset{a.e.}{\underset{c.w.}{=}}~ f'_{\hspace{.07em}\vert\hspace{.07em}[0, \bar\theta]^{ E}}
+    f_{\hspace{.07em}\vert\hspace{.07em}[0, \bar\theta]^{ E}} ~=~ f'_{\hspace{.07em}\vert\hspace{.07em}[0, \bar\theta]^{ E}}
     \implies
     \hat q_{e}(\,\boldsymbol{\cdot}\,;\bar\theta;f)=\hat q_{e}(\,\boldsymbol{\cdot}\,;\bar\theta;f').
         `}
-                </Definition>
-            </Appear>
-
-            <Appear>
-                <Definition>
-                    A predictor {Tex`\hat q_{e}`} <i>respects FIFO</i>, if{" "}
-                    {Tex`\hat T_{e}(\,\boldsymbol{\cdot}\,;\bar\theta, f)`} is
-                    non-decreasing for all {Tex`\bar\theta\in \R_{\geq0}`} and
-                    deterministic flows {Tex`f`}.
-                </Definition>
-            </Appear>
-
-            <Appear>
-                <Theorem>
-                    If {Tex`u\in L^p_{\text{loc}}(\mathbb R, \mathbb R_{\geq 0})`} and all
-                    predictors {Tex`\hat q_{i, e}`} are {Tex`p`}-continuous, oblivious,
-                    and respect FIFO for some {Tex`p>1`},<br /> then there exists a flow{" "}
-                    {Tex`f`} such that {Tex`(\hat q, f)`} is a dynamic prediction
-                    equilibrium.
-                </Theorem>
-            </Appear>
+                    </Definition>
+                </Appear>
+                <Appear>
+                    <Definition width="500">
+                        A predictor {Tex`\hat q_{e}`} is <i>{Tex`p`}-continuous</i>, if for all {Tex`M > 0`} and compact intervals{" "}
+                        {Tex`D`} the mapping{" "}
+                        {BTex`
+       \mathcal A: \quad f^+ \mapsto \hat q_{e}(${emptyArg},${emptyArg}, f)
+       ,`}{" "}
+                        {/*where {Tex`f`} is the deterministic flow with inflow rates {Tex`f^+`},*/}
+                        is sequentially weak-strong continuous from{" "}
+                        {Tex`L^p([0, M])^{ E}`} to {Tex`C([0,M]\times D)`}.
+                    </Definition>
+                </Appear>
+            </div>
         </CustomSlide>
 
-        <CustomSlide section="II. Existence of DPE">
-            <SubHeading textAlign="left">Sketch of the Existence Proof</SubHeading>
-            <Appear>
+        {/*<CustomSlide section="II. Existence of DPE">
+            <div style={{ width: "840px", margin: "0 auto" }}>
+                <SubHeading textAlign="center">Sketch of the Existence Proof</SubHeading>
+                {/*<Appear>
                 <Definition margin="-10px 32px -10px 32px">
                     Given a Banach space {Tex`(X, \lVert ${emptyArg} \rVert_X)`} with
                     canonical pairing {Tex`\langle ${emptyArg}, ${emptyArg} \rangle`}{" "}
@@ -542,78 +581,75 @@ export const Presentation = () => (
           \lVert \mathcal A(x_i) - \mathcal A(x)\rVert_Y \xrightarrow[i\to\infty]{} 0
           .`}
                 </Definition>
-            </Appear>
-            <Appear>
-                <Theorem label="Brézis 1968">
-                    Let {Tex`(X, \lVert ${emptyArg} \rVert)`} be a reflexive Banach space
-                    and {Tex`\langle ${emptyArg}, ${emptyArg} \rangle`} the canonical
-                    pairing between {Tex`X`} and its continuous dual space {Tex`X'`}.
-                    <br />
-                    Let {Tex`\mathcal{A}: K\to X'`} be a sequentially weak-strong
-                    continuous map defined on a non-empty, closed, bounded and convex set{" "}
-                    {Tex`K\subseteq X`}.
-                    <br />
-                    Then there exists a solution {Tex`u\in K`} to the variational
-                    inequality{" "}
-                    {BTex`
+            </Appear>*//*}
+                <Appear>
+                    <Theorem label="Brézis 1968">
+                        Let {Tex`\mathcal{A}: L^p(D)\to L^q(D)`} be a sequentially weak-strong
+                        continuous map defined on a non-empty, closed, bounded and convex set{" "}
+                        {Tex`K\subseteq L^p(D)`} with {Tex`p>1`}.
+
+                        Then there exists a solution {Tex`u\in K`} to the variational
+                        inequality{" "}
+                        {BTex`
         \forall v \in K: \quad
         \langle{\mathcal A(u)},{v - u}\rangle \geq 0
     .`}
-                </Theorem>
-            </Appear>
-            <Appear>
-                <Lemma margin="0 32px">
-                    Assume all network inflow rates are{" "}
-                    {Tex`L_{\text{loc}}^{p}(\mathbb R, \mathbb R_{\geq0})`}, and all
-                    predictors are oblivious, {Tex`p`}-continuous and respect FIFO with{" "}
-                    {Tex`p> 1`}.
-                    <br />
-                    Given a DPE flow {Tex`f`} up to time {Tex`H`} with{" "}
-                    {Tex`f^+\in L_{\text{loc}}^{p}(\mathbb R_{\geq0},\mathbb R_{\geq0})^{ E}`}
-                    , there exists a DPE flow {Tex`h`} up to time {Tex`H+\alpha`} with{" "}
-                    {Tex`\alpha \coloneqq \min_{e\in E}\tau_e`}
-                    <br />
-                    such that {Tex`h_{\leq H} \overset{a.e.}{=} f_{\leq H}`} and{" "}
-                    {Tex`h^+\in L_{\text{loc}}^{p}(\mathbb R, \mathbb R_{\geq0})^{ E}`}{" "}
-                    hold.
-                </Lemma>
-            </Appear>
-            <Appear>
-                <Text style={{ margin: "8px 32px 0 32px", padding: 0 }}>
-                    <i>Proof Sketch.</i>
-                </Text>
-            </Appear>
-            <UnorderedList margin="0px 16px">
-                {/*<ListItem>
+                    </Theorem>
+                </Appear>
+                <Appear>
+                    <Lemma margin="0 32px">
+                        Assume {Tex`u\in L_{\text{loc}}^{p}(\mathbb R_{\geq 0}, \mathbb R_{\geq0})`}, and all
+                        predictors are {Tex`p`}-continuous oblivious, and respect FIFO with{" "}
+                        {Tex`p > 1`}.
+                        <br />
+                        {/*Given a DPE flow {Tex`f`} up to time {Tex`H`} with{" "}
+                        {Tex`f^+\in L_{\text{loc}}^{p}(\mathbb R_{\geq0},\mathbb R_{\geq0})^{ E}`}
+                        , there exists a DPE flow {Tex`h`} up to time {Tex`H+\min_{e\in E}\tau_e`}
+                        <br />
+                        such that {Tex`h_{\leq H} \overset{a.e.}{=} f_{\leq H}`} and{" "}
+                        {Tex`h^+\in L_{\text{loc}}^{p}(\mathbb R, \mathbb R_{\geq0})^{ E}`}{" "}
+                        hold.*//*}
+                        Then, a DPE flow {Tex`f`} up to time {Tex`H`} can be extended to a DPE flow up to time {Tex`H+\tau_{\min}`}.
+                    </Lemma>
+                </Appear>
+                <Appear>
+                    <Text style={{ margin: "8px 32px 0 32px", padding: 0 }}>
+                        <i>Proof Sketch.</i>
+                    </Text>
+                </Appear>
+                <UnorderedList margin="0px 16px">
+                    {/*<ListItem>
         For {Tex`p > 1`}, {Tex`L^p([a, b])`} is a reflexive Banach space with continuous dual space {Tex`L^q([a,b])`} and canonical pairing {Tex`\langle f, g\rangle \coloneqq \int_{[a,b]} f \cdot g \,\mathrm d\lambda`}.
-        </ListItem>*/}
-                <Appear>
-                    <ListItem>
-                        The mapping{" "}
-                        {Tex`\mathcal A: f^+ \mapsto (\theta\mapsto \hat\Delta_{e}(\theta,\theta,f))_{e}`}{" "}
-                        is sequentially weak-strong continuous from{" "}
-                        {Tex`L^p([H,H+\alpha])^{ E}`} to{" "}
-                        {Tex`L^q([H,H+\alpha])^{ E}`}.
-                    </ListItem>
-                </Appear>
-                <Appear>
-                    <ListItem>
-                        We use{" "}
-                        {Tex`\displaystyle~ K\coloneqq \left\{ f^+\in L^p([H, H+\alpha], \mathbb R_{\geq0})^{ E} \,\middle|\,  \begin{array}{c r c l}
+        </ListItem>*//*}
+                    <Appear>
+                        <ListItem>
+                            The mapping{" "}
+                            {Tex`\mathcal A: f^+ \mapsto (\theta\mapsto \hat\Delta_{e}(\theta,\theta,f))_{e}`}{" "}
+                            is sequentially weak-strong continuous from{" "}
+                            {Tex`L^p([H,H+\alpha])^{ E}`} to{" "}
+                            {Tex`L^q([H,H+\alpha])^{ E}`}.
+                        </ListItem>
+                    </Appear>
+                    <Appear>
+                        <ListItem>
+                            We use {Tex`K`} as the set of feasible inflow rate extensions.
+                            {/*Tex`\displaystyle~ K\coloneqq \left\{ f^+\in L^p([H, H+\alpha], \mathbb R_{\geq0})^{ E} \,\middle|\,  \begin{array}{c r c l}
                 \forall i\in I, v\in V\setminus\{t\} : & \sum_{e\in\delta_{v}^+} f^+_{e}   & \overset{a.e.}{=} & b_{v}^+,  \\
-                \forall i\in I :                         & \sum_{e\in\delta_{t}^+} f^+_{e} & \overset{a.e.}{\leq}  & b_{i,t}^+ \\
-            \end{array} \right\}.`}
-                    </ListItem>
-                </Appear>
-                <Appear>
-                    <ListItem>
-                        A solution to the variational inequality corresponds to a DPE flow
-                        up to time {Tex`H+\alpha`}.
-                    </ListItem>
-                </Appear>
-            </UnorderedList>
-        </CustomSlide>
+                \forall i\in I :                         & \sum_{e\in\delta_{t}^+} f^+_{e} & \overset{a.e.}{\leq}  & b_{t}^+ \\
+            \end{array} \right\}.`*//*}
+                        </ListItem>
+                    </Appear>
+                    <Appear>
+                        <ListItem>
+                            A solution to the variational inequality corresponds to a DPE flow
+                            up to time {Tex`H+\alpha`}.
+                        </ListItem>
+                    </Appear>
+                </UnorderedList>
+            </div>
+        </CustomSlide>/*}
 
+        {/*
         <CustomSlide section="II. Existence">
             <SubHeading textAlign="left">
                 Sufficient Conditions for {Tex`p`}-continuity
@@ -638,7 +674,7 @@ export const Presentation = () => (
                 then {Tex`\hat q_{i}`} is a {Tex`p`}-continuous predictor for any{" "}
                 {Tex`p > 1`}.
             </Lemma>
-        </CustomSlide>
+        </CustomSlide>*/}
 
         <CustomSlide intro section="III. Applied Predictors">
             <SubHeading textAlign="left">Applied Predictors</SubHeading>
@@ -737,6 +773,7 @@ export const Presentation = () => (
             </UnorderedList>
         </CustomSlide>
 
+        {/*
         <CustomSlide section="III. Applied Predictors">
             <SubHeading textAlign="left">
                 A generalization of popular models
@@ -775,98 +812,94 @@ export const Presentation = () => (
                     DPE generalize both concepts with a more realistic scenario.
                 </Text>
             </Appear>
-        </CustomSlide>
+        </CustomSlide>*/}
 
+        {/*
         <CustomSlide intro section="IV. Computational Study">
-            <SubHeading textAlign="left">Extension-based Simulation</SubHeading>
-            <UnorderedList>
-                <Appear>
-                    <ListItem>
-                        Approximate a DPE by rerouting agents in discrete time intervals{" "}
-                        {Tex`\bar\theta_k = k\cdot \varepsilon`}.
-                        <Appear>
-                            <Definition>
-                                A pair {Tex`(\hat q, f)`} of predictors {Tex`\hat q`} and a
-                                feasible flow {Tex`f`} is an {Tex`\varepsilon`}-DPE, if for all{" "}
-                                {Tex`\theta\in\mathbb R`}{" "}
-                                {BTex`
-            f_{e}^+(\theta) > 0 \implies \hat\Delta_{e}(\lfloor \theta / \varepsilon\rfloor\cdot \varepsilon, \lfloor \theta / \varepsilon\rfloor\cdot \varepsilon, f) = 0.
+            <SubHeading>Extension-based Simulation</SubHeading>
+            <div style={{ width: "820px", margin: "0 auto" }}>
+                <UnorderedList>
+                    <Appear>
+                        <ListItem>
+                            Approximate a DPE by rerouting agents in discrete time intervals {Tex`\bar\theta_k = k\cdot \delta`}.
+                            <Appear>
+                                <Definition>
+                                    A pair {Tex`(\hat q, f)`} is a {Tex`\delta`}-routed DPE, if {Tex`f`} is feasible and
+                                    {BTex`
+            f_{e}^+(\theta) > 0 \implies \hat\Delta_{e}(\lfloor \theta / \delta\rfloor\cdot \delta, \lfloor \theta / \delta\rfloor\cdot \delta, f) = 0.
           `}
-                            </Definition>
-                        </Appear>
-                    </ListItem>
-                </Appear>
-                <Appear>
-                    <ListItem>
-                        We assume that the network inflow rates {Tex`u`} are piecewise
-                        constant with finite jumps
-                    </ListItem>
-                </Appear>
-                <Appear>
-                    <ListItem>
-                        The extension procedure for one routing interval{" "}
-                        {Tex`(\bar\theta_k,\bar\theta_{k+1})`} given an {Tex`\varepsilon`}
-                        -DPE flow up to time {Tex`H = \bar\theta_k`}:
-                        <div style={{ width: "1200px" }}>
-                            <ThemeProvider theme={{ size: { width: "1200px" } }}>
-                                <OrderedList
-                                    style={{
-                                        backgroundColor: "white",
-                                        border: "1px solid lightgray",
-                                        fontFamily: "",
-                                    }}
-                                >
-                                    <Appear>
-                                        <ListItem>
-                                            Gather predictions{" "}
-                                            {Tex`(\hat q_{e}(${emptyArg};\bar\theta_k; f))_{e}`}{" "}
-                                            for {Tex`\bar\theta_k`}
-                                        </ListItem>
-                                    </Appear>
-                                    <Appear>
-                                        <ListItem>
-                                            Compute all shortest {Tex`v`}-{Tex`t`}-paths at time{" "}
-                                            {Tex`\bar\theta_k`} predicted at time {Tex`\bar\theta_k`}
-                                        </ListItem>
-                                    </Appear>
-                                    <Appear>
-                                        <ListItem>
-                                            <Code>while </Code>
-                                            {Tex`H < \bar\theta_{k+1}`}
-                                            <Code> do:</Code>
-                                        </ListItem>
-                                    </Appear>
-                                    <Appear>
-                                        <ListItem>
-                                            <Code> </Code>Compute maximal{" "}
-                                            {Tex`H'\leq\bar\theta_{k+1}`} such that{" "}
-                                            {Tex`b_{v}^-(\theta)\coloneqq \sum_{e\in\delta_{v}^-} f_{e}^-(\theta) + u(\theta)\cdot\mathbf{1}_{v=s}`}{" "}
-                                            is constant on {Tex`(H, H')`} for all{" "}
-                                            {Tex`v\in V`}
-                                        </ListItem>
-                                    </Appear>
-                                    <Appear>
-                                        <ListItem>
-                                            <Code> </Code>Equally distribute {Tex`b_{v}^-(\theta)`}{" "}
-                                            to the outgoing edges lying on shortest paths during{" "}
-                                            {Tex`(H, H')`}
-                                        </ListItem>
-                                    </Appear>
-                                    <Appear>
-                                        <ListItem>
-                                            <Code> </Code>
-                                            {Tex`H \leftarrow H'`}
-                                        </ListItem>
-                                    </Appear>
-                                </OrderedList>
-                            </ThemeProvider>
-                        </div>
-                    </ListItem>
-                </Appear>
-            </UnorderedList>
-        </CustomSlide>
+                                </Definition>
+                            </Appear>
+                        </ListItem>
+                    </Appear>
+                    <Appear>
+                        <ListItem>
+                            Let {Tex`u`} be a piecewise constant network inflow rate.
+                        </ListItem>
+                    </Appear>
+                    <Appear>
+                        <ListItem>
+                            The extension procedure for one routing interval{" "}
+                            {Tex`(\bar\theta_k,\bar\theta_{k+1})`}:
+                            <div style={{ width: "800px" }}>
+                                <ThemeProvider theme={{ size: { width: "800px" } }}>
+                                    <OrderedList
+                                        style={{
+                                            backgroundColor: "white",
+                                            border: "1px solid lightgray",
+                                            fontFamily: "",
+                                        }}
+                                    >
+                                        <Appear>
+                                            <ListItem>
+                                                Gather predictions{" "}
+                                                {Tex`(\hat q_{e}(${emptyArg};\bar\theta_k; f))_{e}`}{" "}
+                                                for {Tex`\bar\theta_k`}
+                                            </ListItem>
+                                        </Appear>
+                                        <Appear>
+                                            <ListItem>
+                                                Compute all shortest {Tex`v`}-{Tex`t`}-paths at time{" "}
+                                                {Tex`\bar\theta_k`} predicted at time {Tex`\bar\theta_k`}
+                                            </ListItem>
+                                        </Appear>
+                                        <Appear>
+                                            <ListItem>
+                                                <Code>while </Code>
+                                                {Tex`H < \bar\theta_{k+1}`}
+                                                <Code> do:</Code>
+                                            </ListItem>
+                                        </Appear>
+                                        <Appear>
+                                            <ListItem>
+                                                <Code>   </Code>Compute maximal{" "}
+                                                {Tex`H'\leq\bar\theta_{k+1}`} such that the incoming flow into
+                                                <br /><Code>   </Code> any node {Tex`v\in V`} stays constant on {Tex`(H, H')`}
+                                            </ListItem>
+                                        </Appear>
+                                        <Appear>
+                                            <ListItem>
+                                                <Code>   </Code>Equally distribute {Tex`b_{v}^-(\theta)`}{" "}
+                                                to outgoing edges lying on {Tex`\bar\theta`}-predicted shortest
+                                                <br /><Code>   </Code>paths during {Tex`(H, H')`}
+                                            </ListItem>
+                                        </Appear>
+                                        <Appear>
+                                            <ListItem>
+                                                <Code>   </Code>
+                                                {Tex`H \leftarrow H'`}
+                                            </ListItem>
+                                        </Appear>
+                                    </OrderedList>
+                                </ThemeProvider>
+                            </div>
+                        </ListItem>
+                    </Appear>
+                </UnorderedList>
+            </div>
+        </CustomSlide>*/}
 
-        <CustomSlide section="IV. Computational Study">
+        {/*<CustomSlide section="IV. Computational Study">
             <SubHeading textAlign="left">
                 Comparing the Performance of Predictors
             </SubHeading>
@@ -945,19 +978,18 @@ export const Presentation = () => (
                     </ListItem>
                 </Appear>
             </UnorderedList>
-        </CustomSlide>
+        </CustomSlide>*/}
 
-        <CustomSlide intro section="V. Conclusion">
+        <CustomSlide section="V. Conclusion">
+            <SubHeading>Wrapping up</SubHeading>
             <CustomTable
-                style={{ margin: "100px auto", textAlign: "center" }}
-                width={0.8}
+                style={{ margin: "0 auto", textAlign: "center" }}
+                width={0.6}
             >
+
                 <TableHeader textAlign="center">
-                    <th>Contributions</th>
-                    <th>Future Work</th>
                 </TableHeader>
                 <colgroup>
-                    <col style={{ width: "50%" }} />
                     <col style={{ width: "50%" }} />
                 </colgroup>
                 <tbody>
@@ -966,8 +998,7 @@ export const Presentation = () => (
                             <UnorderedList style={{ display: "inline-block" }}>
                                 <Appear>
                                     <ListItem>
-                                        A mathematically concise model that generalizes existing
-                                        rather unrealistic models.
+                                        A mathematically concise model that generalizes existing models.
                                     </ListItem>
                                 </Appear>
                                 <Appear>
@@ -984,30 +1015,7 @@ export const Presentation = () => (
                                 </Appear>
                                 <Appear>
                                     <ListItem>
-                                        The simulation and visualisation allows to test various
-                                        predictors in real world traffic networks.
-                                    </ListItem>
-                                </Appear>
-                            </UnorderedList>
-                        </td>
-                        <td>
-                            <UnorderedList style={{ display: "inline-block" }}>
-                                <Appear>
-                                    <ListItem>
-                                        Is the existence still given if we allow {Tex`\tau_e=0`} on
-                                        some edges?
-                                    </ListItem>
-                                </Appear>
-                                <Appear>
-                                    <ListItem>
-                                        Generalize the predictors' inputs to allow for other flow
-                                        related data than past queues.
-                                    </ListItem>
-                                </Appear>
-                                <Appear>
-                                    <ListItem>
-                                        Embed more advanced ML methods for traffic forecast into the
-                                        simulation.
+                                        Approximate DPE can be computed in finite time for piecewise constant inflow rates.
                                     </ListItem>
                                 </Appear>
                             </UnorderedList>
@@ -1046,11 +1054,34 @@ const CustomTable = styled(Table)`
   }
 `;
 
+const ValuesStepper = ({ values }) => {
+    return <Stepper values={values.map((_, i) => i).slice(1)} alwaysVisible>
+        {(value, step, isActive) => {
+            if (!value) {
+                return values[0]
+            } else {
+                return values[value]
+            }
+        }}
+    </Stepper>
+}
+
 const Code = (props) => <span style={{ whiteSpace: "pre" }} {...props} />;
 const MLPredictorStepper = () => {
     return (
-        <Stepper values={[1, 2]} alwaysVisible>
+        <Stepper values={[]} alwaysVisible>
             {(value, step, isActive) => {
+                return Tex`
+          \left(
+            \bar\theta + j\delta,
+             \left(  
+              \sum_{e' \in N(e)} 
+                 \sum_{i=0}^k a_{i,j}^{e'}\cdot q^f_{e'}(\bar\theta-i\delta)
+              \right)^+
+          \right)
+      .`;
+
+
                 if (!value) {
                     return Tex`
           \left(
